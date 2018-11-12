@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="nav navbar-nav">
+            <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link" href="#">Home</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div id="app">
+            <h1>{{ message }}</h1>
+            <h3>{{ firstname }} {{ lastname }}</h3>
+
+            <div class="form-group">
+              <label for=""></label>
+              <!--v-bind:value="????"[KEY]-->
+              <input type="text" v-model:value="firstname"
+                class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+              <small id="helpId" class="form-text text-muted">Firstname</small>
+            </div>
+            <div class="form-group">
+                    <label for=""></label>
+                    <!--v-bind:value="????"[KEY] UPDATE DATA REALTIME-->
+                    <input type="text" v-model:value="lastname"
+                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
+                    <small id="helpId" class="form-text text-muted">Lastname</small>
+                  </div>
+                  <button type="button" class="btn btn-primary" v-on:click="ShowLocaltime"></button>
+                  <h4>{{localtime}}</h4>
+                  <ol>
+                    <li v-for="item in hobbies">
+                        {{ item.title }} ({{item.timespeed}})
+                    </li>
+                </ol>
+      
+        </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+        crossorigin="anonymous"></script>
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hi Vue! ver 2.0',
+                firstname: 'Pathomphon',
+                lastname: 'Sripanrod',
+                localtime: new Date().tolocaleString(),
+                hobbies: [
+                    {title:'Game', timespeed: '50%'},
+                    {title:'Music', timespeed: '40%'},
+                    {title:'Movie', timespeed: '20%'}
+                    ]
+            },
+            methods: {
+                ShowLocaltime:function(){
+                    this.localtime= new Date().tolocaleString()
+
+                }
+
+            }
+        })
+    </script>
+
+</body>
+
+</html>
