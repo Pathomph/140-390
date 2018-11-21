@@ -22,30 +22,50 @@
     <div class="container">
         <div id="app">
             <h1>{{ message }}</h1>
-            <h3>{{ firstname }} {{ lastname }}</h3>
+            <!--[:= v-bind]-->
+            <fullname name="Pathomphon Sripanrod"></fullname>
+            <fullname v-bind:name="firstname"></fullname>
+            <fullname :name="lastname"></fullname>
+            <counter></counter>
+            <counter></counter>
 
             <div class="form-group">
-              <label for=""></label>
-              <!--v-bind:value="????"[KEY]-->
-              <input type="text" v-model:value="firstname"
-                class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-              <small id="helpId" class="form-text text-muted">Firstname</small>
+                <label for=""></label>
+                <!--v-bind:value="????"[KEY] NO UPDATE INSTANCE DATA-->
+                <input type="text" v-model:value="firstname" class="form-control" name="" id="" aria-describedby="helpId"
+                    placeholder="">
+                <small id="helpId" class="form-text text-muted">Firstname</small>
             </div>
             <div class="form-group">
-                    <label for=""></label>
-                    <!--v-bind:value="????"[KEY] UPDATE DATA REALTIME-->
-                    <input type="text" v-model:value="lastname"
-                      class="form-control" name="" id="" aria-describedby="helpId" placeholder="">
-                    <small id="helpId" class="form-text text-muted">Lastname</small>
-                  </div>
-                  <button type="button" class="btn btn-primary" v-on:click="ShowLocaltime"></button>
-                  <h4>{{localtime}}</h4>
-                  <ol>
-                    <li v-for="item in hobbies">
-                        {{ item.title }} ({{item.timespeed}})
-                    </li>
-                </ol>
-      
+                <label for=""></label>
+                <!--v-model:value="????"[KEY] UPDATE INSTANCE DATA REALTIME-->
+                <input type="text" v-model:value="lastname" class="form-control" name="" id="" aria-describedby="helpId"
+                    placeholder="">
+                <small id="helpId" class="form-text text-muted">Lastname</small>
+            </div>
+            <!--v-on:click="????"[KEY] SHOW-UPDATE TIME DATA REALTIME -->
+            <button type="button" class="btn btn-dark" v-on:click="showLocalTime">Update Time</button>
+            <h4>{{ localtime }}</h4>
+            <!-- <ol><li v-for="item in hobbies"> {{ item.title }} ({{ item.timespeed }})</li></ol> List>>>-->
+            <div class="form-group">
+                <label for="">Title</label>
+                <input type="text" v-model:value="newtitle" name="" id="" class="form-control" placeholder=""
+                    aria-describedby="helpId">
+                <small id="helpId" class="text-muted"></small>
+            </div>
+            <div class="form-group">
+                <label for="">Time (%)</label>
+                <input type="text" v-model:value="newtimespeed" name="" id="" class="form-control" placeholder=""
+                    aria-describedby="helpId">
+                <small id="helpId" class="text-muted"></small>
+            </div>
+            <button type="button" class="btn btn-dark" v-on:click="addHobby">ADD A HOBBY</button>
+
+            <ol>
+                <li v-for="item in hobbies">
+                    {{ item.title }} ({{ item.timespeed }})
+                </li>
+            </ol>
         </div>
     </div>
     <!-- Optional JavaScript -->
@@ -59,25 +79,56 @@
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script>
+
+        //กำหนดUIของตัวเองโดย TEXT สร้าง tag html เป้น Instance[fixed-template]
+        Vue.component('fullname', {
+            //รับค่ามาจากข่างนอกมาเป็น instance ของ fullname
+            props: ['name'],
+            template: '<h3>{{name}}</h3>'
+        })
+
+        Vue.component('counter', {
+            template: '<div><h3>{{count}}</h3><button @click="add">Add</button></div>',
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            methods: {
+                add: function () {
+                    this.count++
+                }
+            }
+        })
+
         var app = new Vue({
             el: '#app',
             data: {
                 message: 'Hi Vue! ver 2.0',
                 firstname: 'Pathomphon',
                 lastname: 'Sripanrod',
-                localtime: new Date().tolocaleString(),
+                localtime: new Date().toLocaleString(),
+                newtitle: '',
+                newtimespeed: '',
                 hobbies: [
-                    {title:'Game', timespeed: '50%'},
-                    {title:'Music', timespeed: '40%'},
-                    {title:'Movie', timespeed: '20%'}
-                    ]
+                    { title: 'Game', timespeed: '50%' },
+                    { title: 'Music', timespeed: '40%' },
+                    { title: 'Movie', timespeed: '20%' }
+                ]
             },
             methods: {
-                ShowLocaltime:function(){
-                    this.localtime= new Date().tolocaleString()
-
+                showLocalTime: function () {
+                    this.localtime = new Date().toLocaleString()
+                },
+                addHobby: function () {
+                    var newhobby = {
+                        title: this.newtitle,
+                        timespeed: this.newtimespeed
+                    }
+                    this.hobbies.push(newhobby)
+                    this.newtitle = ''
+                    this.newtimespeed = ''
                 }
-
             }
         })
     </script>
